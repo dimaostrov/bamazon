@@ -39,7 +39,9 @@ const checkInventory = (id, quantity) => {
     if (error) throw error;
     if(results[0].stock_quantity > quantity){
       completeSale(id, quantity);
-      console.log(`You owe $${results[0].price * quantity}`);
+      console.log(`You owe $${results[0].price * quantity}
+      db is updated, ${results[0].product_name} has ${results[0].stock_quantity - quantity} quantity left.`);
+
     } else {
       console.log('Insufficient Quantity!');
     }
