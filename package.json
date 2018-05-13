@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/dimaostrov/bamazon#readme",
   "dependencies": {
+    "express": "^4.16.3",
     "faker": "^4.1.0",
     "inquirer": "^5.2.0",
     "mysql": "^2.15.0",

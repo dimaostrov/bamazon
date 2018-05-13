@@ -10,11 +10,14 @@ var connection = mysql.createConnection({
 
 connection.connect(); 
 
-const choices = {
-  'View Products for Sale': viewProducts(),
-  'View Low Inventory': viewLowInventory(),
-  'Add to Inventory': addToInventory(),
-  'Add New Product': addNewProduct()
+const getChoice = (type) => {
+  const choices = {
+    'View Products for Sale': viewProducts,
+    'View Low Inventory': viewLowInventory,
+    'Add to Inventory': addToInventory,
+    'Add New Product': addNewProduct
+  }
+  return choices[type]();
 }
 
 i.prompt([
@@ -25,21 +28,24 @@ i.prompt([
     choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product']
   }
 ]).then(a => {
-  choices[a.choice];  
+  getChoice(a.choice); 
   connection.end();
 })
 
-const viewProducts = (id, quantity) => {
+const viewProducts = () => {
+  console.log('hi');
   connection.query('SELECT * FROM products', function (error, results, fields) {
     if (error) throw error;
-
+    products = results.map(x => `Id:${x.item_id} | ${x.product_name} | $${x.price} | stock:${x.stock_quantity}`);
+    console.log(products);
   });
 }
 
-const viewLowInventory = (id, quantity) => {
-  connection.query('SELECT * FROM products', function (error, results, fields) {
+const viewLowInventory = () => {
+  connection.query('SELECT * FROM products WHERE stock_quantity < 2000', function (error, results, fields) {
     if (error) throw error;
-
+    products = results.map(x => `Id:${x.item_id} | ${x.product_name} | $${x.price} | stock:${x.stock_quantity}`);
+    console.log(products);
   });
 }
 
